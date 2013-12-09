@@ -1,0 +1,71 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head></h:head>
+	<h:body>
+		<div class="main-wrapper">
+			<div id="question-header">
+				<h1>#{questionDetailBean.question.summary}</h1>
+			</div>
+			<div id="mainbar">
+				<div class="question" id="question">
+					<div class="votecell">
+						<h:form>
+							<h:panelGroup id="vote" layout="block" class="vote">
+								<p:commandLink action="#{questionDetailBean.setQuestionVote(1)}" update="vote"
+									styleClass="#{questionDetailBean.question.vote.upCssClass}" title="#{msg.vote_up_label}" />
+								<h:outputText styleClass="vote-count-post"
+									value="#{questionDetailBean.question.nbVotes}" />
+								<p:commandLink action="#{questionDetailBean.setQuestionVote(-1)}" update="vote"
+									styleClass="#{questionDetailBean.question.vote.downCssClass}" title="#{msg.vote_down_label}" />
+							</h:panelGroup>
+						</h:form>
+					</div>
+					<div class="postcell">
+						<div class="post-text">
+							<h:outputText value="#{questionDetailBean.question.content}" escape="false" />
+						</div>
+					</div>
+				</div>
+				<div id="answers">
+					<div id="answers-header">
+						<div class="subheader">
+							<h2>#{questionDetailBean.question.nbAnswers} #{msg[questionDetailBean.question.answerLabel]}</h2>
+						</div>
+					</div>
+					<ui:repeat value="#{questionDetailBean.question.answers}" var="answer">
+						<div class="answer">
+							<div class="votecell">
+								<h:form>
+									<h:panelGroup id="vote" layout="block" class="vote">
+										<p:commandLink action="#{questionDetailBean.answerUpVote(answer.id)}" update="vote"
+											styleClass="#{answer.vote.upCssClass}" title="#{msg.vote_up_label}" />
+										<h:outputText styleClass="vote-count-post"
+											value="#{answer.nbVotes}" />
+										<p:commandLink action="#{questionDetailBean.answerDownVote(answer.id)}" update="vote"
+											styleClass="#{answer.vote.downCssClass}" title="#{msg.vote_down_label}" />
+									</h:panelGroup>
+								</h:form>
+							</div>
+							<div class="postcell">
+								<div class="post-text">
+									<h:outputText value="#{answer.content}" escape="false"/>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</ui:repeat>
+					<h:form rendered="#{!questionDetailBean.posted}">
+						<h2>#{msg.your_answer}</h2>
+						<p:editor value="#{questionDetailBean.newAnswer}" required="true"/>
+						<p>
+							<p:commandButton value="#{msg.post_your_answer}" action="#{questionDetailBean.postAnswer}" update="@all"/>
+						</p>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</h:body>
+</f:view>

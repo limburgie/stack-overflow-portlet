@@ -1,0 +1,46 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:portlet="http://java.sun.com/portlet_2_0">
+	<h:head></h:head>
+	<h:body>
+		<div class="main-wrapper">
+			<ui:repeat value="#{questionOverviewBean.newestQuestions}" var="question">
+				<div class="question-summary">
+					<div class="statscontainer">
+						<div class="statsarrow"></div>
+						<div class="stats">
+							<div class="vote">
+								<div class="votes">
+									<span class="vote-count-post">
+										<strong>#{question.nbVotes}</strong>
+									</span>
+									<div class="viewcount">
+										<h:outputText value="#{msg[question.voteLabel]}" />
+									</div>
+								</div>
+							</div>
+							<div class="status #{question.answersCssClass}">
+								<strong>#{question.nbAnswers}</strong>
+								<h:outputText value="#{msg[question.answerLabel]}" />
+							</div>
+							<div class="views" title="#{question.nbViews} #{msg[question.viewLabel]}">
+								#{question.nbViews} #{msg[question.viewLabel]}</div>
+						</div>
+					</div>
+					<div class="summary">
+						<portlet:renderURL var="questionDetailUrl">
+							<portlet:param name="questionId" value="#{question.idString}" />
+						</portlet:renderURL>
+						<h3>
+							<a href="#{questionDetailUrl}" class="question-hyperlink">#{question.summary} </a>
+						</h3>
+						<div class="excerpt">#{question.excerpt}</div>
+					</div>
+				</div>
+			</ui:repeat>
+		</div>
+	</h:body>
+</f:view>

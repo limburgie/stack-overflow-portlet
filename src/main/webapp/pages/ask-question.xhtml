@@ -1,0 +1,35 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:portlet="http://java.sun.com/portlet_2_0">
+	<h:head></h:head>
+	<h:body>
+		<h:form>
+			<div class="main-wrapper">
+				<div class="nav">
+                    <ul>
+                        <li>
+                        	<p:commandLink action="#{createQuestionBean.prepareNew}" update=":new-question-form" oncomplete="newQuestionDialog.show()" value="#{msg.ask_question}"/>
+                        </li>
+                    </ul>
+                </div>
+			</div>
+		</h:form>
+		<h:form id="new-question-form">
+			<p:dialog styleClass="new-question" widgetVar="newQuestionDialog" id="new-question-dialog" visible="#{!empty facesContext.maximumSeverity}" header="#{msg.new_question}" modal="true" resizable="true">
+				<p:messages autoUpdate="true"/>
+				<p>
+					<p:outputLabel for="summary" value="#{msg.title}"/>
+					<p:inputText id="summary" value="#{createQuestionBean.question.summary}" required="true" label="#{msg.title}"/>
+					<p:watermark for="summary" value="#{msg.enter_your_question_here}"/>
+				</p>
+				<p:editor value="#{createQuestionBean.question.content}" required="true" width="660" label="#{msg.body_text}"/>
+				<p>
+					<p:commandButton value="#{msg.post_your_question}" action="#{createQuestionBean.post}" update=":new-question-form"/>
+				</p>
+			</p:dialog>
+		</h:form>
+	</h:body>
+</f:view>

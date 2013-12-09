@@ -1,0 +1,17 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:portlet="http://java.sun.com/portlet_2_0">
+	<h:head></h:head>
+	<h:body>
+		<p:growl autoUpdate="true"/>
+		<h:panelGroup rendered="#{!empty questionDetailBean.question}">
+			<ui:include src="/pages/question.xhtml"/>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{empty questionDetailBean.question}">
+			<ui:include src="/pages/list.xhtml"/>
+		</h:panelGroup>
+	</h:body>
+</f:view>
